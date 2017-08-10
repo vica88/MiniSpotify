@@ -1,0 +1,40 @@
+<div class="col-lg-6" *ngIf="identity">
+	<h1>{{titulo}}</h1>
+	<!-- FORMULARIO -->
+	<div *ngIf="alertMessage">
+	<!-- clase de bootstrap || {{error que viene en el mensaje}} las dobles llaves son el binding por interpolacion-->
+		<div class="alert alert-info">
+			{{alertMessage}}
+		</div>
+	</div>
+	<form #userUpdateForm="ngForm" (ngSubmit)="onSubmit()" class="col-md-7">
+		<p>
+			<label for="">Nombre:</label>
+			<input type="text" #name="ngModel" name="name" [(ngModel)]="user.name" class="form-control" required />
+			<span *ngIf="!name.valid && name.touched">El nombre es obligatorio</span>
+		</p>
+		<p>
+			<label for="">Apellidos:</label>
+			<input type="text" #surname="ngModel" name="surname" [(ngModel)]="user.surname" class="form-control" required />
+			<span *ngIf="!surname.valid && surname.touched">Los apellidos son obligatorios</span>
+		</p>
+		<p>
+			<!-- utilizamos la directiva de two data biding con [(ngModel)] -->
+			<label for="">Correo Electrónico:</label>
+			<input type="email" #email="ngModel" name="email" [(ngModel)]="user.email" class="form-control" required />
+			<span *ngIf="!email.valid && email.touched">El email es obligatorio</span>
+		</p>
+
+		<div class="image-for-edit" *ngIf="user.image && user.image != null">
+			<img src="{{url + 'get-image-user/' +user.image}}" alt="" style="width: 70px;" />
+		</div>
+	
+		<p>
+			<label for="">Sube tu foto: </label>
+			<input type="file" placeholder="Subir imagen..." (change) = "fileChangeEvent($event)" />
+		</p>
+		<!-- la clase btn-primary es para dibujar un boton -->
+		<input type="submit" value="Actualizar mis datos" class="btn btn-primary" />
+	</form>
+	
+</div>
